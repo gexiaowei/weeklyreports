@@ -1,0 +1,16 @@
+{
+  "name": "weeklyreports",
+  "version": "1.0.0",
+  "description": "write weekly report auto use for company",
+  "main": "report.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vivian (gandxiaowei@gmail.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "cli": "latest",
+    "moment": "latest",
+    "xml2js": "latest"
+  }
+}
