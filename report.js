@@ -11,9 +11,17 @@ var child_process = require("child_process"),
     moment = require('moment'),
     xml2js = require('xml2js');
 
+var reportPath = '工作周报';
+var fileFormat = '%s工作周报(%s-%s).txt';
+
+
 function reportWeeklyWork(userName, options) {
     if (!options) {
         options = {};
+    }
+
+    if (!fs.existsSync(reportPath)) {
+        fs.mkdirSync(reportPath);
     }
 
     var startDate = options.startDate,
@@ -33,9 +41,9 @@ function reportWeeklyWork(userName, options) {
     child_process.exec(cmd, {encoding: 'utf8'}, function (err, data) {
         xml2js.parseString(data, function (error, result) {
             var report = buildReport(result.log.logentry);
-            fs.writeFileSync(path.join('工作周报', userName + '工作周报(' + moment(startDate).format('M.DD') + '-' + moment(endDate).format('M.DD') + ')' + '.txt'), report);
+            var filePath = path.join(reportPath, util.format(fileFormat, userName, moment(startDate).format('M.DD'), moment(endDate).format('M.DD')));
+            fs.writeFileSync(filePath, report);
         });
-
     });
 }
 
@@ -70,12 +78,13 @@ function buildReport(logentrys) {
 }
 
 reportWeeklyWork('gexiaowei', {
-    startDate: '2015-04-27',
-    endDate: '2015-05-01'
+    startDate: '2015-05-17',
+    endDate: '2015-05-24'
 });
+
 reportWeeklyWork('zhangtong', {
-    startDate: '2015-04-27',
-    endDate: '2015-05-01'
+    startDate: '2015-05-17',
+    endDate: '2015-05-24'
 });
 
 module.exports = reportWeeklyWork;
